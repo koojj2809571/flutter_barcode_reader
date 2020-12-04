@@ -42,6 +42,19 @@ public class SwiftBarcodeScanPlugin: NSObject, FlutterPlugin, BarcodeScannerView
             scannerViewController.config = config
         }
         scannerViewController.delegate = self
+        while(true){
+                        if  hostViewController?.presentedViewController != nil{
+                            hostViewController = hostViewController?.presentedViewController;
+
+                        } else if hostViewController is UITabBarController{
+                            hostViewController = (hostViewController as! UITabBarController).selectedViewController;
+
+                        } else if hostViewController is UINavigationController {
+                            hostViewController = (hostViewController as! UINavigationController).visibleViewController;
+                        } else {
+                            break;
+                        }
+                    }
         hostViewController?.present(navigationController, animated: false)
     }
     
